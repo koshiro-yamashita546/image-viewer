@@ -1,0 +1,60 @@
+.dropzone {
+  border: 2px dashed #444;
+  border-radius: 8px;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: #1a1a1a;
+}
+
+.dropzone:hover,
+.dragging {
+  border-color: #4a9eff;
+  background: #1a2030;
+}
+
+.label {
+  color: #888;
+  font-size: 15px;
+}
+
+.progressList {
+  margin-top: 16px;
+  text-align: left;
+}
+
+.progressItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.fileName {
+  color: #aaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.progressBar {
+  flex: 1;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.1s;
+}
+
+.error {
+  color: #f44;
+  font-size: 11px;
+}

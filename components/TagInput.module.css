@@ -1,0 +1,84 @@
+.container {
+  position: relative;
+}
+
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  background: #1a1a1a;
+  cursor: text;
+  min-height: 36px;
+}
+
+.field:focus-within {
+  border-color: #4a9eff;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: #2a3a50;
+  color: #7bbfff;
+  border-radius: 12px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  color: #7bbfff;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.removeBtn:hover {
+  opacity: 1;
+}
+
+.input {
+  flex: 1;
+  min-width: 80px;
+  border: none;
+  background: none;
+  color: #e0e0e0;
+  font-size: 13px;
+  outline: none;
+}
+
+.suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 6px;
+  list-style: none;
+  padding: 4px 0;
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.suggestion {
+  padding: 7px 12px;
+  font-size: 13px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.suggestion:hover {
+  background: #2a2a2a;
+  color: #fff;
+}

@@ -1,0 +1,44 @@
+.cell {
+  display: block;
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #1a1a1a;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  /* 隣接セルとの境界を細い線で示す */
+  outline: 1px solid #111;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.35s ease;
+}
+
+.cell:hover .img {
+  transform: scale(1.06);
+}
+
+.albumBadge {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  pointer-events: none;
+  /* ページ数アイコン */
+}
+
+.albumBadge::before {
+  content: "📄 ";
+  font-size: 10px;
+}
