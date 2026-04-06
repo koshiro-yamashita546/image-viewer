@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Image Viewer
 
-## Getting Started
+ローカル・サーバーどちらでも動く画像ビューア。Docker で起動します。
 
-First, run the development server:
+## 起動方法
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker compose up -d
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで http://localhost:3000 にアクセス。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## データの保存先
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+DB・画像ファイルはすべてコンテナ外のフォルダ1つで管理されます。
 
-## Learn More
+```
+data/               ← デフォルトの保存先（docker-compose.yml で変更可）
+  image-viewer.db
+  originals/
+  webp/
+  thumbnails/
+```
 
-To learn more about Next.js, take a look at the following resources:
+保存先を変えたい場合は `docker-compose.yml` の1行を編集するだけで、**再ビルド不要**です。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```yaml
+volumes:
+  - ./data:/data               # デフォルト（プロジェクト直下の data フォルダ）
+  - ./storage:/data            # 既存の storage フォルダをそのまま使う場合
+  - /mnt/nas/image-viewer:/data  # NASや別ドライブに置く場合
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## アップデート
 
-## Deploy on Vercel
+```bash
+git pull
+docker compose up -d --build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+DB のマイグレーションは起動時に自動で実行されます。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ポート変更
+
+デフォルトは 3000 番ポートです。変更する場合は `docker-compose.yml` を編集:
+
+```yaml
+ports:
+  - "8080:3000"  # ホスト側のポートを変更
+```
+
+## 開発
+
+Docker を使わずローカルで動かす場合:
+
+```bash
+npm install
+# .env.local に STORAGE_PATH を設定
+echo "STORAGE_PATH=$(pwd)/storage" > .env.local
+npm run dev
+```
