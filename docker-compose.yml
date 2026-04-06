@@ -4,10 +4,9 @@ services:
     ports:
       - "3000:3000"
     environment:
-      STORAGE_PATH: /data
+      STORAGE_PATH: /storage
     volumes:
       # ホスト側のパスを変えるだけでデータ保存先を変更できる（再ビルド不要）
-      # 既存の storage フォルダをそのまま使う場合は ./storage:/data に変更する
-      # 例: /mnt/nas/image-viewer:/data
-      - ./data:/data
+      # 例: /mnt/nas/image-viewer:/storage
+      - ./storage:/storage
     restart: unless-stopped

@@ -86,9 +86,23 @@ declare global {
   var _imageViewerDb: Database.Database | undefined;
 }
 
-export const db: Database.Database =
-  globalThis._imageViewerDb ?? getDb();
-
-if (process.env.NODE_ENV !== "production") {
-  globalThis._imageViewerDb = db;
+function getInstance(): Database.Database {
+  if (!globalThis._imageViewerDb) {
+    const instance = getDb();
+    if (process.env.NODE_ENV !== "production") {
+      globalThis._imageViewerDb = instance;
+    }
+    return instance;
+  }
+  return globalThis._imageViewerDb;
 }
+
+// Lazy proxy — defers DB initialization to first use so that importing this
+// module during Next.js build (when STORAGE_PATH is not set) does not throw.
+export const db: Database.Database = new Proxy({} as Database.Database, {
+  get(_target, prop) {
+    const instance = getInstance();
+    const value = (instance as unknown as Record<string | symbol, unknown>)[prop as string];
+    return typeof value === "function" ? (value as Function).bind(instance) : value;
+  },
+});
